@@ -10,6 +10,16 @@ app.get('/', (req, res) => {
   res.json({ status: 'Proxy server running' });
 });
 
+app.get('/my-ip', async (req, res) => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    res.json({ ip: data.ip });
+  } catch (error) {
+    res.json({ error: 'Could not detect IP' });
+  }
+});
+
 // Proxy all requests to Dynadot
 app.all('/dynadot/*', async (req, res) => {
   const dynadotUrl = `https://api.dynadot.com/api3.json${req.url.replace('/dynadot', '')}`;
