@@ -33,3 +33,12 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+app.get('/my-ip', async (req, res) => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    res.json({ ip: data.ip });
+  } catch (error) {
+    res.json({ error: 'Could not detect IP' });
+  }
+});
