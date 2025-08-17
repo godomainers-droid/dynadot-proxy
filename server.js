@@ -5,6 +5,11 @@ const app = express();
 
 app.use(express.json());
 
+// ROOT ROUTE
+app.get('/', (req, res) => {
+  res.json({ status: 'Proxy server running' });
+});
+
 // Proxy all requests to Dynadot
 app.all('/dynadot/*', async (req, res) => {
   const dynadotUrl = `https://api.dynadot.com/api3.json${req.url.replace('/dynadot', '')}`;
